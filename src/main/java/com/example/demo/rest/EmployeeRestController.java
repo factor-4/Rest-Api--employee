@@ -5,6 +5,7 @@ import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +27,19 @@ public class EmployeeRestController {
     public List<Employee> findAll() {
         return employeeService.findAll();
     }
+
+    // add mapping for get a employee
+    @GetMapping("/employees/{employeeId}")
+    public Employee getEmployee(@PathVariable int employeeId) {
+        Employee theEmployee = employeeService.findById(employeeId);
+
+        if(theEmployee == null){
+            throw new RuntimeException(("Employee id not found - "+ employeeId));
+
+        }
+
+        return  theEmployee;
+    }
+
+
 }
